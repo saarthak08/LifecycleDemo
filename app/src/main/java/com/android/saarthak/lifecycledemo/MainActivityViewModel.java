@@ -1,19 +1,22 @@
 package com.android.saarthak.lifecycledemo;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class MainActivityViewModel extends ViewModel {
     private int clickCount=0;
+    private MutableLiveData<Integer> mutableLiveData= new MutableLiveData<>();
 
-    public  int getCurrentCount(){
+    public  MutableLiveData<Integer> getCount(){
 
-        clickCount+=1;
-        return clickCount;
+        mutableLiveData.setValue(clickCount);
+        return mutableLiveData;
     }
 
 
-    public  int getInitialCount(){
-        return clickCount;
+    public  void IncreaseCount(){
+        clickCount+=1;
+        mutableLiveData.setValue(clickCount);
     }
 
 }

@@ -5,6 +5,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.View;
@@ -24,13 +26,20 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mainActivityViewModel= ViewModelProviders.of(this).get(MainActivityViewModel.class);
         textView=findViewById(R.id.tvCount);
-        textView.setText("Count is: "+mainActivityViewModel.getInitialCount());
+        textView.setText("Count is: "+mainActivityViewModel.getCount());
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                textView.setText("Count is: "+mainActivityViewModel.getCurrentCount());
+                mainActivityViewModel.IncreaseCount();
+            }
+        });
+        LiveData<Integer> liveData=mainActivityViewModel.getCount();
+        liveData.observe(MainActivity.this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                textView.setText(("Count is: "+integer));
             }
         });
     }
