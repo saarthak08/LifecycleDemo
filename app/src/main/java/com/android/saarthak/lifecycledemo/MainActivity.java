@@ -5,14 +5,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    MainActivityViewModel mainActivityViewModel;
 
-    private int clickCount=0;
     private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,15 +22,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        mainActivityViewModel= ViewModelProviders.of(this).get(MainActivityViewModel.class);
         textView=findViewById(R.id.tvCount);
-        textView.setText("Count is: "+clickCount);
+        textView.setText("Count is: "+mainActivityViewModel.getInitialCount());
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                textView.setText("Count is: "+getCurrentCount());
+                textView.setText("Count is: "+mainActivityViewModel.getCurrentCount());
             }
         });
     }
@@ -38,12 +40,6 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    public  int getCurrentCount(){
-
-        clickCount+=1;
-        return clickCount;
     }
 
 
