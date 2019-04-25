@@ -24,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mainActivityViewModel= ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        //mainActivityViewModel= ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        mainActivityViewModel=ViewModelProviders.of(this,new MainActivityViewModelFactory(5)).get(MainActivityViewModel.class);
         textView=findViewById(R.id.tvCount);
         textView.setText("Count is: "+mainActivityViewModel.getCount());
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
